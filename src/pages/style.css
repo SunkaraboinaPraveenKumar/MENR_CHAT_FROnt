@@ -1,0 +1,9 @@
+/* styles.css */
+@media (max-width: 600px) {
+    .arrow-icon-sm {
+      width: 20px;
+      height: 20px;
+      border-radius: 100%;
+    }
+  }
+  
