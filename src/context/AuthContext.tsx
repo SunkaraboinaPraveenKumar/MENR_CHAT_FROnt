@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react'
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 import { checkAuthStatus, loginUser, logoutUser, signupUser } from '../helpers/api-communicator'
 
 type User = {
