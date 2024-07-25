@@ -1,12 +1,6 @@
 import axios from "axios";
-
-const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000/api/v1", // Local backend URL
-  withCredentials: true,
-});
-
 export const loginUser = async (email: string, password: string) => {
-  const res = await axiosInstance.post("/user/login", { email, password });
+  const res = await axios.post("/user/login", { email, password });
   if (res.status !== 200) {
     throw new Error("Unable to login");
   }
@@ -19,7 +13,7 @@ export const signupUser = async (
   email: string,
   password: string
 ) => {
-  const res = await axiosInstance.post("/user/signup", { name, email, password });
+  const res = await axios.post("/user/signup", { name, email, password });
   if (res.status !== 201) {
     throw new Error("Unable to Signup");
   }
@@ -28,7 +22,7 @@ export const signupUser = async (
 };
 
 export const checkAuthStatus = async () => {
-  const res = await axiosInstance.get("/user/auth-status");
+  const res = await axios.get("/user/auth-status");
   if (res.status !== 200) {
     throw new Error("Unable to authenticate");
   }
@@ -37,7 +31,7 @@ export const checkAuthStatus = async () => {
 };
 
 export const sendChatRequest = async (message: string) => {
-  const res = await axiosInstance.post("/chat/new", { message });
+  const res = await axios.post("/chat/new", { message });
   if (res.status !== 200) {
     throw new Error("Unable to send chat");
   }
@@ -46,16 +40,16 @@ export const sendChatRequest = async (message: string) => {
 };
 
 export const getUserChats = async () => {
-  const res = await axiosInstance.get("/chat/all-chats");
+  const res = await axios.get("/chat/all-chats");
   if (res.status !== 200) {
-    throw new Error("Unable to get chats");
+    throw new Error("Unable to send chat");
   }
   const data = await res.data;
   return data;
 };
 
 export const deleteUserChats = async () => {
-  const res = await axiosInstance.delete("/chat/delete");
+  const res = await axios.delete("/chat/delete");
   if (res.status !== 200) {
     throw new Error("Unable to delete chats");
   }
@@ -64,9 +58,9 @@ export const deleteUserChats = async () => {
 };
 
 export const logoutUser = async () => {
-  const res = await axiosInstance.get("/user/logout");
+  const res = await axios.get("/user/logout");
   if (res.status !== 200) {
-    throw new Error("Unable to logout");
+    throw new Error("Unable to delete chats");
   }
   const data = await res.data;
   return data;
