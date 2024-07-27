@@ -28,8 +28,8 @@ const Chat = () => {
   const [chatMessages, setChatMessages] = useState<Message[]>([]);
 
   const handleSubmit = async () => {
-    const content = inputRef.current?.value.trim() || ""; // Ensure content is trimmed
-    if (!content) return; // Prevent sending empty messages
+    const content = inputRef.current?.value.trim() || "";
+    if (!content) return;
 
     if (inputRef.current) {
       inputRef.current.value = "";
@@ -39,13 +39,14 @@ const Chat = () => {
     setChatMessages((prev) => [...prev, newMessage]);
 
     try {
-      const chatData = await sendChatRequest(content);
-      if (Array.isArray(chatData.chats)) {
-        setChatMessages([...chatData.chats]);
+      await sendChatRequest(content);
+      // Fetch updated chats
+      const updatedChats = await getUserChats();
+      if (Array.isArray(updatedChats.chats)) {
+        setChatMessages([...updatedChats.chats]);
       } else {
-        window.location.reload();
-        console.error('chatData.chats is not an array:', chatData.chats);
-        // toast.error('Failed to load chats');
+        console.error('updatedChats.chats is not an array:', updatedChats.chats);
+        toast.error('Failed to load chats');
       }
     } catch (error) {
       console.error('Error sending chat request:', error);
@@ -67,7 +68,7 @@ const Chat = () => {
 
   const handleScrollToBottom = () => {
     if (chatBoxRef.current) {
-      chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+      chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight - 1; // Adjust scroll position to be slightly up from the bottom
     }
   };
 
@@ -96,7 +97,11 @@ const Chat = () => {
     if (!auth?.user) {
       navigate("/login");
     }
-  }, [auth]);
+  }, [auth, navigate]);
+
+  useEffect(() => {
+    handleScrollToBottom();
+  }, [chatMessages]);
 
   const userName = auth?.user?.name;
   const userInitials = userName
@@ -112,7 +117,7 @@ const Chat = () => {
         height: "100%",
         mt: 3,
         gap: 3,
-        flexDirection: { xs: "column", md: "row" }, // Stack on small screens, row on medium and larger screens
+        flexDirection: { xs: "column", md: "row" },
       }}
     >
       <Box
@@ -176,7 +181,7 @@ const Chat = () => {
           flex: { md: 0.8, xs: 1 },
           flexDirection: "column",
           px: 3,
-          position: "relative", // Added for positioning the floating button
+          position: "relative",
         }}
       >
         <Typography
@@ -199,7 +204,7 @@ const Chat = () => {
             mx: "auto",
             display: "flex",
             flexDirection: "column",
-            overflowY: "auto", // Handle vertical overflow
+            overflowY: "auto",
             overflowX: "hidden",
             scrollBehavior: "smooth",
           }}
@@ -216,27 +221,27 @@ const Chat = () => {
             display: "flex",
             margin: "auto",
             marginBottom: "20px",
-            position: "relative", // Ensure positioning is relative for the input container
+            position: "relative",
           }}
         >
           <textarea
             ref={inputRef}
-            rows={2} // Start with two rows
+            rows={2}
             style={{
               width: "100%",
               backgroundColor: "transparent",
-              padding: "10px", // Adjust padding for better responsiveness
+              padding: "10px",
               border: "none",
               outline: "none",
               color: "white",
               fontSize: "16px",
-              resize: "none", // Prevent manual resizing
-              overflowY: "auto", // Allow vertical scrolling
-              boxSizing: "border-box", // Ensure padding is included in the width
+              resize: "none",
+              overflowY: "auto",
+              boxSizing: "border-box",
             }}
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault(); // Prevent form submission
+                e.preventDefault();
                 handleSubmit();
               }
             }}
