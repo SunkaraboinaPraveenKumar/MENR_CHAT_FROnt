@@ -4,57 +4,92 @@ axios.defaults.baseURL = "https://backendaibotmern-5.onrender.com/api/v1";
 axios.defaults.withCredentials = true;
 
 export const loginUser = async (email: string, password: string) => {
-  const res = await axios.post("/user/login", { email, password });
-  if (res.status !== 200) {
-    throw new Error("Unable to login");
+  try {
+    const res = await axios.post("https://backendaibotmern-5.onrender.com/api/v1/user/login", { email, password });
+    return res.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || "Unable to login");
+    } else {
+      throw new Error("An unknown error occurred during login.");
+    }
   }
-  return res.data;
 };
 
 export const signupUser = async (name: string, email: string, password: string) => {
-  const res = await axios.post("/user/signup", { name, email, password });
-  if (res.status !== 201) {
-    throw new Error("Unable to Signup");
+  try {
+    const res = await axios.post("https://backendaibotmern-5.onrender.com/api/v1/user/signup", { name, email, password });
+    return res.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || "Unable to Signup");
+    } else {
+      throw new Error("An unknown error occurred during signup.");
+    }
   }
-  return res.data;
 };
 
 export const checkAuthStatus = async () => {
-  const res = await axios.get("/user/auth-status");
-  if (res.status !== 200) {
-    throw new Error("Unable to authenticate");
+  try {
+    const res = await axios.get("https://backendaibotmern-5.onrender.com/api/v1/user/auth-status");
+    return res.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || "Unable to authenticate");
+    } else {
+      throw new Error("An unknown error occurred during authentication.");
+    }
   }
-  return res.data;
 };
 
 export const sendChatRequest = async (message: string) => {
-  const res = await axios.post("/chat/new", { message });
-  if (res.status !== 200) {
-    throw new Error("Unable to send chat");
+  try {
+    const res = await axios.post("https://backendaibotmern-5.onrender.com/api/v1/chat/new", { message });
+    return res.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || "Unable to send chat");
+    } else {
+      throw new Error("An unknown error occurred while sending chat.");
+    }
   }
-  return res.data;
 };
 
 export const getUserChats = async () => {
-  const res = await axios.get("/chat/all-chats");
-  if (res.status !== 200) {
-    throw new Error("Unable to get chats");
+  try {
+    const res = await axios.get("https://backendaibotmern-5.onrender.com/api/v1/chat/all-chats");
+    return res.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || "Unable to get chats");
+    } else {
+      throw new Error("An unknown error occurred while getting chats.");
+    }
   }
-  return res.data;
 };
 
 export const deleteUserChats = async () => {
-  const res = await axios.delete("/chat/delete");
-  if (res.status !== 200) {
-    throw new Error("Unable to delete chats");
+  try {
+    const res = await axios.delete("https://backendaibotmern-5.onrender.com/api/v1/chat/delete");
+    return res.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || "Unable to delete chats");
+    } else {
+      throw new Error("An unknown error occurred while deleting chats.");
+    }
   }
-  return res.data;
 };
 
 export const logoutUser = async () => {
-  const res = await axios.get("/user/logout");
-  if (res.status !== 200) {
-    throw new Error("Unable to logout");
+  try {
+    const res = await axios.get("https://backendaibotmern-5.onrender.com/api/v1/user/logout");
+    return res.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || "Unable to logout");
+    } else {
+      throw new Error("An unknown error occurred during logout.");
+    }
   }
-  return res.data;
 };
