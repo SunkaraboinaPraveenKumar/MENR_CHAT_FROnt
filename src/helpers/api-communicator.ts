@@ -1,11 +1,13 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "https://backendaibotmern-5.onrender.com/api/v1";
-axios.defaults.withCredentials = true;
+const api = axios.create({
+  baseURL: "https://backendaibotmern-5.onrender.com/api/v1",
+  withCredentials: true, // Include credentials in all requests
+});
 
 export const loginUser = async (email: string, password: string) => {
   try {
-    const res = await axios.post("https://backendaibotmern-5.onrender.com/api/v1/user/login", { email, password });
+    const res = await api.post("/user/login", { email, password });
     return res.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -18,7 +20,7 @@ export const loginUser = async (email: string, password: string) => {
 
 export const signupUser = async (name: string, email: string, password: string) => {
   try {
-    const res = await axios.post("https://backendaibotmern-5.onrender.com/api/v1/user/signup", { name, email, password });
+    const res = await api.post("/user/signup", { name, email, password });
     return res.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -31,7 +33,7 @@ export const signupUser = async (name: string, email: string, password: string) 
 
 export const checkAuthStatus = async () => {
   try {
-    const res = await axios.get("https://backendaibotmern-5.onrender.com/api/v1/user/auth-status");
+    const res = await api.get("/user/auth-status");
     return res.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -44,7 +46,7 @@ export const checkAuthStatus = async () => {
 
 export const sendChatRequest = async (message: string) => {
   try {
-    const res = await axios.post("https://backendaibotmern-5.onrender.com/api/v1/chat/new", { message });
+    const res = await api.post("/chat/new", { message });
     return res.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -57,7 +59,7 @@ export const sendChatRequest = async (message: string) => {
 
 export const getUserChats = async () => {
   try {
-    const res = await axios.get("https://backendaibotmern-5.onrender.com/api/v1/chat/all-chats");
+    const res = await api.get("/chat/all-chats");
     return res.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -70,7 +72,7 @@ export const getUserChats = async () => {
 
 export const deleteUserChats = async () => {
   try {
-    const res = await axios.delete("https://backendaibotmern-5.onrender.com/api/v1/chat/delete");
+    const res = await api.delete("/chat/delete");
     return res.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -83,7 +85,7 @@ export const deleteUserChats = async () => {
 
 export const logoutUser = async () => {
   try {
-    const res = await axios.get("https://backendaibotmern-5.onrender.com/api/v1/user/logout");
+    const res = await api.get("/user/logout");
     return res.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
