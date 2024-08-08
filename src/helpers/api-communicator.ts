@@ -1,10 +1,10 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:3000/api/v1";
+axios.defaults.baseURL = "https://mern-chat-backend-5.onrender.com/api/v1";
 axios.defaults.withCredentials = true;
 
 export const loginUser = async (email: string, password: string) => {
-  const res = await axios.post("/user/login", { email, password });
+  const res = await axios.post("https://mern-chat-backend-5.onrender.com/api/v1/user/login", { email, password });
   if (res.status !== 200) {
     throw new Error("Unable to login");
   }
@@ -12,7 +12,7 @@ export const loginUser = async (email: string, password: string) => {
 };
 
 export const signupUser = async (name: string, email: string, password: string) => {
-  const res = await axios.post("/user/signup", { name, email, password });
+  const res = await axios.post("https://mern-chat-backend-5.onrender.com/api/v1/user/signup", { name, email, password });
   if (res.status !== 201) {
     throw new Error("Unable to Signup");
   }
@@ -20,7 +20,7 @@ export const signupUser = async (name: string, email: string, password: string) 
 };
 
 export const checkAuthStatus = async () => {
-  const res = await axios.get("/user/auth-status");
+  const res = await axios.get("https://mern-chat-backend-5.onrender.com/api/v1/user/auth-status");
   if (res.status !== 200) {
     throw new Error("Unable to authenticate");
   }
@@ -28,7 +28,7 @@ export const checkAuthStatus = async () => {
 };
 
 export const sendChatRequest = async (message: string) => {
-  const res = await axios.post("/chat/new", { message });
+  const res = await axios.post("https://mern-chat-backend-5.onrender.com/api/v1/chat/new", { message });
   if (res.status !== 200) {
     throw new Error("Unable to send chat");
   }
@@ -36,7 +36,7 @@ export const sendChatRequest = async (message: string) => {
 };
 
 export const getUserChats = async () => {
-  const res = await axios.get("/chat/all-chats");
+  const res = await axios.get("https://mern-chat-backend-5.onrender.com/api/v1/chat/all-chats");
   if (res.status !== 200) {
     throw new Error("Unable to get chats");
   }
@@ -44,7 +44,7 @@ export const getUserChats = async () => {
 };
 
 export const deleteUserChats = async () => {
-  const res = await axios.delete("/chat/delete");
+  const res = await axios.delete("https://mern-chat-backend-5.onrender.com/api/v1/chat/delete");
   if (res.status !== 200) {
     throw new Error("Unable to delete chats");
   }
@@ -52,7 +52,7 @@ export const deleteUserChats = async () => {
 };
 
 export const logoutUser = async () => {
-  const res = await axios.get("/user/logout");
+  const res = await axios.get("https://mern-chat-backend-5.onrender.com/api/v1/user/logout");
   if (res.status !== 200) {
     throw new Error("Unable to logout");
   }
