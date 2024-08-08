@@ -1,97 +1,60 @@
 import axios from "axios";
 
-const api = axios.create({
-  baseURL: "https://backendaibotmern-5.onrender.com/api/v1",
-  withCredentials: true, // Include credentials in all requests
-});
+axios.defaults.baseURL = "http://localhost:3000/api/v1";
+axios.defaults.withCredentials = true;
 
 export const loginUser = async (email: string, password: string) => {
-  try {
-    const res = await api.post("/user/login", { email, password });
-    return res.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(error.response?.data?.message || "Unable to login");
-    } else {
-      throw new Error("An unknown error occurred during login.");
-    }
+  const res = await axios.post("/user/login", { email, password });
+  if (res.status !== 200) {
+    throw new Error("Unable to login");
   }
+  return res.data;
 };
 
 export const signupUser = async (name: string, email: string, password: string) => {
-  try {
-    const res = await api.post("/user/signup", { name, email, password });
-    return res.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(error.response?.data?.message || "Unable to Signup");
-    } else {
-      throw new Error("An unknown error occurred during signup.");
-    }
+  const res = await axios.post("/user/signup", { name, email, password });
+  if (res.status !== 201) {
+    throw new Error("Unable to Signup");
   }
+  return res.data;
 };
 
 export const checkAuthStatus = async () => {
-  try {
-    const res = await api.get("/user/auth-status");
-    return res.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(error.response?.data?.message || "Unable to authenticate");
-    } else {
-      throw new Error("An unknown error occurred during authentication.");
-    }
+  const res = await axios.get("/user/auth-status");
+  if (res.status !== 200) {
+    throw new Error("Unable to authenticate");
   }
+  return res.data;
 };
 
 export const sendChatRequest = async (message: string) => {
-  try {
-    const res = await api.post("/chat/new", { message });
-    return res.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(error.response?.data?.message || "Unable to send chat");
-    } else {
-      throw new Error("An unknown error occurred while sending chat.");
-    }
+  const res = await axios.post("/chat/new", { message });
+  if (res.status !== 200) {
+    throw new Error("Unable to send chat");
   }
+  return res.data;
 };
 
 export const getUserChats = async () => {
-  try {
-    const res = await api.get("/chat/all-chats");
-    return res.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(error.response?.data?.message || "Unable to get chats");
-    } else {
-      throw new Error("An unknown error occurred while getting chats.");
-    }
+  const res = await axios.get("/chat/all-chats");
+  if (res.status !== 200) {
+    throw new Error("Unable to get chats");
   }
+  return res.data;
 };
 
 export const deleteUserChats = async () => {
-  try {
-    const res = await api.delete("/chat/delete");
-    return res.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(error.response?.data?.message || "Unable to delete chats");
-    } else {
-      throw new Error("An unknown error occurred while deleting chats.");
-    }
+  const res = await axios.delete("/chat/delete");
+  if (res.status !== 200) {
+    throw new Error("Unable to delete chats");
   }
+  return res.data;
 };
 
 export const logoutUser = async () => {
-  try {
-    const res = await api.get("/user/logout");
-    return res.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(error.response?.data?.message || "Unable to logout");
-    } else {
-      throw new Error("An unknown error occurred during logout.");
-    }
+  const res = await axios.get("/user/logout");
+  if (res.status !== 200) {
+    throw new Error("Unable to logout");
   }
+  return res.data;
 };
